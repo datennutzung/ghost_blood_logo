@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ghostblood Logo</title>
+</head>
+    <body>
+        <svg width=500 height=500>
+            <polygon id="logo"
+                points="" 
+                style="fill:white;stroke:black"
+            >
+            <polyline id="logo_white"
+                points="" 
+                style="fill:white;stroke:white;"
+            >
+        </svg>
+    </body>
+    <script type="text/javascript">
+        function newPoint(oldPoint, partLength, vertical_dir) {
+            const xy = oldPoint.split(",").map((e)=>{return parseInt(e)})
+            let x = xy[0]
+            let y = xy[1]
+
+            if (vertical_dir == " ")
+                    x += partLength
+            else {
+                x += partLength / 2
+                let ylen = Math.abs(partLength / 2)*Math.sqrt(3)
+                if (vertical_dir == "d") {
+                    y += ylen
+                } else {
+                    y -= ylen
+                }
+            }
+
+            return x+","+y
+        }
+
+        const logo = document.querySelector("#logo")
+        const logoWhite = document.querySelector("#logo_white")
+        const mul = 35
+        const nlen = 5*mul
+        const slen = 2.2*mul
+        const strokeWidth = 0.7*mul
+        const whiteWidth = 0.3*mul
+        const start = "250,50"
+        // D = Diamond, C = Corner, u = upper, l = left, r = right
+        const uDuC = start
+        const uDlC = newPoint(uDuC, -nlen, "d")
+        const uDrC = newPoint(uDuC, nlen, "d")
+        const uDdC = newPoint(uDlC, nlen, "d")
+        const rDlC = newPoint(uDrC, slen, "d")
+        const rDuC = newPoint(rDlC, nlen, "d")
+        const rDrC = newPoint(rDuC, -nlen, " ")
+        const lDlC = newPoint(rDrC, -slen, " ")
+        const lDuC = newPoint(lDlC, -nlen, " ")
+        const lDrC = newPoint(lDuC, nlen, "u")
+        const points = [uDuC, uDrC, lDlC, lDuC, lDrC, rDlC, rDuC, rDrC, uDlC].join(" ")
+        
+        
+        const white_lines = [].join(" ")
+
+        logo.style["stroke-width"] = strokeWidth;
+        logo.setAttribute("points", points);
+        logoWhite.style["stroke-width"] = whiteWidth;
+        logoWhite.setAttribute("points", white_lines)
+    </script>
+</html>
