@@ -9,17 +9,25 @@
         <svg width=500 height=500>
             <polygon id="logo"
                 points="" 
-                style="fill:white;stroke:black"
-            >
-            <polyline id="logo_white"
+                style="fill:none;stroke:black"
+            />
+            <polyline id="logo_white1"
                 points="" 
-                style="fill:white;stroke:white;"
-            >
+                style="fill:none;stroke: red;"
+            />
+            <polyline id="logo_white2"
+                points="" 
+                style="fill:none;stroke: red;"
+            />
+            <polyline id="logo_white3"
+                points="" 
+                style="fill:none;stroke: red;"
+            />
         </svg>
     </body>
     <script type="text/javascript">
         function newPoint(oldPoint, partLength, vertical_dir) {
-            const xy = oldPoint.split(",").map((e)=>{return parseInt(e)})
+            const xy = oldPoint.split(",").map((e)=>{return parseFloat(e)})
             let x = xy[0]
             let y = xy[1]
 
@@ -38,33 +46,73 @@
             return x+","+y
         }
 
+        function snewPoint(oldPoint, right, down) {
+            const xy = oldPoint.split(",").map((e)=>{return parseFloat(e)})
+            let x = xy[0]+right
+            let y = xy[1]+down
+
+            return x+","+y
+        }
+
         const logo = document.querySelector("#logo")
-        const logoWhite = document.querySelector("#logo_white")
-        const mul = 35
-        const nlen = 5*mul
-        const slen = 2.2*mul
-        const strokeWidth = 0.7*mul
-        const whiteWidth = 0.3*mul
+        const logoWhite1 = document.querySelector("#logo_white1")
+        const logoWhite2 = document.querySelector("#logo_white2")
+        const logoWhite3 = document.querySelector("#logo_white3")
+        const p_1 = document.querySelector("#p1")
+        const p_2 = document.querySelector("#p2")
+        const p_3 = document.querySelector("#p3")
+
+        const mul = 16
+        const nlen = 10*mul
+        const slen = 4.9*mul
+        const strokeWidth = 2*mul
+        const whiteWidth = .10//1*mul
         const start = "250,50"
         // D = Diamond, C = Corner, u = upper, l = left, r = right
-        const uDuC = start
+        const uDuC = start                      // 250, 50
         const uDlC = newPoint(uDuC, -nlen, "d")
         const uDrC = newPoint(uDuC, nlen, "d")
         const uDdC = newPoint(uDlC, nlen, "d")
+
         const rDlC = newPoint(uDrC, slen, "d")
         const rDuC = newPoint(rDlC, nlen, "d")
-        const rDrC = newPoint(rDuC, -nlen, " ")
-        const lDlC = newPoint(rDrC, -slen, " ")
-        const lDuC = newPoint(lDlC, -nlen, " ")
-        const lDrC = newPoint(lDuC, nlen, "u")
-        const points = [uDuC, uDrC, lDlC, lDuC, lDrC, rDlC, rDuC, rDrC, uDlC].join(" ")
+
+        const rDrC = newPoint(uDdC, slen, "d")
+        const lDlC = newPoint(uDdC, -slen, "d")
         
+        const lDrC = newPoint(uDlC, -slen, "d")
+        const lDuC = newPoint(lDrC, -nlen, "d")
+
+        const logo_points = [uDuC, uDrC, lDlC, lDuC, lDrC, rDlC, rDuC, rDrC, uDlC].join(" ")
         
-        const white_lines = [].join(" ")
+        const p11 = snewPoint(rDlC, 0, -strokeWidth/2-whiteWidth/2)
+        const p21 = newPoint(p11, -nlen+strokeWidth/4+strokeWidth/32+whiteWidth/2, " ")
+
+        const p12 = newPoint(lDlC, strokeWidth/2+strokeWidth/16+strokeWidth/64+whiteWidth/2, "d")
+        const p22 = newPoint(p12, nlen, "u")
+
+        const p13 = newPoint(uDlC, -strokeWidth/4-whiteWidth/2, " ")
+        const p23 = newPoint(p13, nlen+whiteWidth+1, "d")
+
+        const middle = uDdC.split(",")[0]+","+p22.split(",")[1]
+
+        const white_line1 = [p12, p22, middle].join(" ")
+        const white_line2 = [p11, p21, middle].join(" ")
+        const white_line3 = [p13, p23, middle].join(" ")
+
+
 
         logo.style["stroke-width"] = strokeWidth;
-        logo.setAttribute("points", points);
-        logoWhite.style["stroke-width"] = whiteWidth;
-        logoWhite.setAttribute("points", white_lines)
+        logo.setAttribute("points", logo_points);
+
+        logoWhite1.style["stroke-width"] = whiteWidth;
+        logoWhite1.setAttribute("points", white_line1)
+        
+        logoWhite2.style["stroke-width"] = whiteWidth;
+        logoWhite2.setAttribute("points", white_line2)
+        
+        logoWhite3.style["stroke-width"] = whiteWidth;
+        logoWhite3.setAttribute("points", white_line3)
+
     </script>
 </html>
