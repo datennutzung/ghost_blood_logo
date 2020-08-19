@@ -13,15 +13,15 @@
             />
             <polyline id="logo_white1"
                 points="" 
-                style="fill:none;stroke: red;"
+                style="fill:none;stroke: rgba(255, 255, 255, 1);"
             />
             <polyline id="logo_white2"
                 points="" 
-                style="fill:none;stroke: red;"
+                style="fill:none;stroke: rgba(255, 255, 255, 1);"
             />
             <polyline id="logo_white3"
                 points="" 
-                style="fill:none;stroke: red;"
+                style="fill:none;stroke: rgba(255, 255, 255, 1);"
             />
         </svg>
     </body>
@@ -64,9 +64,9 @@
 
         const mul = 16
         const nlen = 10*mul
-        const slen = 4.9*mul
+        const slen = 5.4*mul
         const strokeWidth = 2*mul
-        const whiteWidth = .10//1*mul
+        const whiteWidth = 1*mul
         const start = "250,50"
         // D = Diamond, C = Corner, u = upper, l = left, r = right
         const uDuC = start                      // 250, 50
@@ -85,20 +85,21 @@
 
         const logo_points = [uDuC, uDrC, lDlC, lDuC, lDrC, rDlC, rDuC, rDrC, uDlC].join(" ")
         
-        const p11 = snewPoint(rDlC, 0, -strokeWidth/2-whiteWidth/2)
-        const p21 = newPoint(p11, -nlen+strokeWidth/4+strokeWidth/32+whiteWidth/2, " ")
+        const p11 = snewPoint(rDlC, 1, -strokeWidth/2-whiteWidth/2)
+        const p21 = newPoint(p11, -nlen+strokeWidth/4+strokeWidth/32+whiteWidth/4, " ")
+        const p31 = newPoint(p21, strokeWidth+strokeWidth/2+strokeWidth/4, "d")
 
-        const p12 = newPoint(lDlC, strokeWidth/2+strokeWidth/16+strokeWidth/64+whiteWidth/2, "d")
+        const p12 = newPoint(lDlC, strokeWidth/2+strokeWidth/16+strokeWidth/32+strokeWidth/64+strokeWidth/128+whiteWidth/2, "d")
         const p22 = newPoint(p12, nlen, "u")
+        const p32 = newPoint(p22, -strokeWidth-strokeWidth/2-strokeWidth/4," ")
 
-        const p13 = newPoint(uDlC, -strokeWidth/4-whiteWidth/2, " ")
-        const p23 = newPoint(p13, nlen+whiteWidth+1, "d")
+        const p13 = newPoint(uDlC, -strokeWidth/2-strokeWidth/16-strokeWidth/32-strokeWidth/64-strokeWidth/128-whiteWidth/2, " ")
+        const p23 = newPoint(p13, nlen, "d")
+        const p33 = newPoint(p23, strokeWidth+strokeWidth/2+strokeWidth/4,"u")
 
-        const middle = uDdC.split(",")[0]+","+p22.split(",")[1]
-
-        const white_line1 = [p12, p22, middle].join(" ")
-        const white_line2 = [p11, p21, middle].join(" ")
-        const white_line3 = [p13, p23, middle].join(" ")
+        const white_line1 = [p12, p22, p32].join(" ")
+        const white_line2 = [p11, p21, p31].join(" ")
+        const white_line3 = [p13, p23, p33].join(" ")
 
 
 
